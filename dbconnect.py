@@ -1,4 +1,5 @@
 import pymysql.cursors
+import pandas as pd
 
 # 連接配置訊息
 config = {
@@ -65,13 +66,17 @@ class connectDB():
 
         now_code = code
 
+    def getcode(self, code):
+        global now_code
+        now_code = code
+
     def insert_data(self, temp):
 
         global now_code
         # print(temp)
 
         sql = "INSERT INTO `" + now_code + "`(r_time, r_st, b_time, b_st, r_name, t_time) VALUES " + temp
-        val = (now_code,temp)
+        val = (now_code, temp)
         try:
             # print(r_time, r_st, b_time, b_st, b_name, t_time)
             self.connection.ping(reconnect=True)
@@ -81,8 +86,46 @@ class connectDB():
             self.connect()
             self.connection.rollback()
 
+    def insert_newPost_data(self, snc, sna, sarea, ar, lat, lng):
+
+        sql = "INSERT INTO `info`(snc, sna, sarea, ar, lat, lng) VALUES(%s, %s, %s, %s, %s, %s) "
+        val = (snc, sna, sarea, ar, lat, lng)
+        try:
+            # print(r_time, r_st, b_time, b_st, b_name, t_time)
+            self.connection.ping(reconnect=True)
+            self.cursor.execute(sql, val)
+            self.connection.commit()
+        except:
+            self.connect()
+            self.connection.rollback()
+
     def query_data(self, sna):
-        sql = "SELECT snc FROM sinformation WHERE sna ='%s'" % sna
+        sql = "SELECT snc FROM info WHERE sna ='%s'" % sna
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
+
+    def query_data_name(self, snc):
+        sql = "SELECT sna FROM info WHERE snc ='%s'" % snc
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
+
+    def query_data_count(self):
+        sql = "SELECT COUNT(*) FROM `info`"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
+
+    def query_data_for_show(self, dataform):
+        result = pd.read_sql('SELECT * FROM ' + dataform, con=self.connection)
+        # sql = "SELECT * FROM " + dataform
+        # self.cursor.execute(sql)
+        # result = self.cursor.fetchall()
+        return result
+
+    def query_table_for_show(self):
+        sql = "show TABLES"
         self.cursor.execute(sql)
         result = self.cursor.fetchall()
         return result
