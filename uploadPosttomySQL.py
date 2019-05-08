@@ -71,7 +71,7 @@ def ReadCsvForReturn(x):
         global PositionForReturn
         PositionForReturn = {}
 
-        with open(step + ".csv", newline='') as csvfile:
+        with open("./csv/" + step + ".csv", newline='') as csvfile:
 
             # 讀取 CSV 檔案內容
             rows = csv.reader(csvfile)
@@ -196,7 +196,7 @@ def main():
     # ReadCsvForRent(x)
     ReadCsvForReturn(x)
     x.exit()
-    print(del_for_never)
+    # print(del_for_never)
 
 
 if __name__ == "__main__":

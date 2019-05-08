@@ -1,0 +1,15 @@
+A1_rent
+sno,r_time,r_st,b_time,b_st,b_name,t_time
+
+A1_return
+sno,r_time,r_st,r_name,b_time,b_st,t_time
+
+
+
+
+例如:
+
+A1(租借站代號, 舉例)
+流水id, 租借時間, 租借timestamp(UTC), 歸還時間, 歸還時間timestamp(UTC), 歸還站, 租借總時間
+ sno    r_time.  r_st              
+
