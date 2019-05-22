@@ -74,12 +74,14 @@ def main():
             # print(len(group_new_data))
             percentile.append(len(group_new_data))
             all_count.append(group_new_data)
+            print(i, percentile, all_count)
             # each_count.append(count_each_week(group_new_data))
             # each_count.append(avg_month)
         # all_count.append(each_count)
     # df_each_site = pd.DataFrame(all_count, columns=['name', 'rent', 'return'])
     # print(df_each_site)
     # df_each_site.to_csv('avg_month.csv')
+    print(all_count)
     third_ = np.percentile(percentile, [75])
     pattern = []
     count_i = 0
@@ -100,7 +102,6 @@ def main():
                 elif len(all_count[count_i]) < third_[0]:
                     print(i)
                     break
-
             count_j += 1
         count_i += 1
     patternDate = pd.DataFrame(pattern, columns=['place_1', 'place_2', 'total'])
